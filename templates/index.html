@@ -1,62 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>PromptForge</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
 
-    <header class="navbar">
-        <h1 class="logo">PromptForge</h1>
-        <div class="nav-right">
-            <a href="#">Login</a>
-            <a href="#">Sign Up</a>
-        </div>
-    </header>
+{% block content %}
 
-        <!-- Menu Button -->
-    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
-
-    <!-- Overlay -->
-    <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
-
-    <!-- Sidebar -->
-    <div id="sidebar" class="sidebar">
-        <h2>Menu</h2>
-        <a href="#">Home</a>
-        <a href="#">Trending</a>
-        <a href="#">For You</a>
-        <a href="#">My Prompts</a>
-        <a href="#">Subscriptions</a>
-        <a href="#">Settings</a>
-    </div>
-    
-    <section class="feed">
-        {% for prompt in prompts %}
-        <div class="card">
-            <img src="{{ prompt.image_url }}" alt="Generated Image">
-            <div class="card-content">
-                <h3>{{ prompt.title }}</h3>
-                <p class="creator">@{{ prompt.creator }}</p>
-                <div class="stats">
-                    <span>⭐ {{ prompt.rating }}</span>
-                    <span>❤️ {{ prompt.likes }}</span>
-                </div>
+<section class="feed">
+    {% for prompt in prompts %}
+    <div class="card">
+        <img src="{{ prompt.image_url }}" alt="Generated Image">
+        <div class="card-content">
+            <h3>{{ prompt.title }}</h3>
+            <p class="creator">@{{ prompt.creator }}</p>
+            <div class="stats">
+                <span>⭐ {{ prompt.rating }}</span>
+                <span>❤️ {{ prompt.likes }}</span>
             </div>
         </div>
-        {% endfor %}
-    </section>
+    </div>
+    {% endfor %}
+</section>
 
-        <script>
-    function toggleSidebar() {
-        const sidebar = document.getElementById("sidebar");
-        const overlay = document.getElementById("overlay");
-
-        sidebar.classList.toggle("active");
-        overlay.classList.toggle("active");
-    }
-    </script>
-    
-</body>
-</html>
+{% endblock %}
