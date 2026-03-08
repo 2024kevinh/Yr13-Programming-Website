@@ -1,6 +1,9 @@
 from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
+from models import db, User
 
 app = Flask(__name__)
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
 
 @app.route("/")
 def home():
@@ -31,14 +34,14 @@ def home():
             "creator": "Hacker",
             "rating": 3.8,
             "likes": 200,
-            "image_url": "https://picsum.photos/400/800"
+            "image_url": "https://picsum.photos/400/600"
         },
         {
             "title": "photorealistic",
             "creator": "ProPrompter",
             "rating": 4.8,
             "likes": 4050,
-            "image_url": "https://picsum.photos/400/900"
+            "image_url": "https://picsum.photos/400/400"
         },
         {
             "title": "Quality",
