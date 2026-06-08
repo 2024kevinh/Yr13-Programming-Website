@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+project.db
+project.db-journal
+venv/
+.env
+.vscode/

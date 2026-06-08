@@ -8,8 +8,10 @@ main = Blueprint("main", __name__)
 def home():
     # Query prompts from the database. Templates expect attributes like
     # prompt.image_url, prompt.title, prompt.creator,
-    # prompt.rating, prompt.likes
-    prompts = Prompt.query.order_by(Prompt.likes.desc()).all()
+    # prompt.rating (or average_rating), prompt.likes (or downloads)
+    # Older code used `likes`; current model uses `downloads`, so order by
+    # `downloads` to avoid AttributeError when `likes` doesn't exist.
+    prompts = Prompt.query.order_by(Prompt.downloads.desc()).all()
     return render_template("index.html", prompts=prompts)
 
 

@@ -10,8 +10,10 @@
             <h3>{{ prompt.title }}</h3>
             <p class="creator">@{{ prompt.creator }}</p>
             <div class="stats">
-                <span>⭐ {{ prompt.rating }}</span>
-                <span>❤️ {{ prompt.likes }}</span>
+                <!-- show average_rating if available, otherwise legacy rating -->
+                <span>⭐ {{ prompt.average_rating or prompt.rating }}</span>
+                <!-- show downloads if available, otherwise legacy likes -->
+                <span>❤️ {{ prompt.downloads or prompt.likes }}</span>
             </div>
         </div>
     </div>

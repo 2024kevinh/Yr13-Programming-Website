@@ -1,5 +1,6 @@
 from flask import Flask
 from models import db
+import os
 
 
 def create_app():
@@ -9,11 +10,15 @@ def create_app():
     Returns the configured Flask app.
     """
     app = Flask(__name__)
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
+    # Use an explicit path for the DB so we know which file is used.
+    db_path = os.path.join(os.getcwd(), "project.db")
+    app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     # Initialize extensions
     db.init_app(app)
+
+    # Helpful debug note: DB path is explicit to avoid path confusion
 
     # Import and register blueprints
     from routes import main as main_bp
