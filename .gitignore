@@ -5,3 +5,5 @@ project.db-journal
 venv/
 .env
 .vscode/
+instance/
+instance/*

@@ -1,7 +1,3 @@
-"""Small helper to create the DB and seed example Prompt rows.
-
-Run with: python init_db.py
-"""
 from app import create_app
 from models import db, Prompt, User
 
@@ -60,17 +56,14 @@ def seed_prompts(default_user_id):
 
     for p in example:
         exists = (
-            Prompt.query.filter_by(title=p["title"], creator_id=default_user_id).first()
+            Prompt.query.filter_by(title=p["title"], creator=default_user_id).first()
         )
         if not exists:
             prompt = Prompt(
                 title=p["title"],
-                description=p["description"],
-                tags=p["tags"],
                 image_url=p["image_url"],
-                downloads=p["downloads"],
-                average_rating=p["average_rating"],
-                creator_id=default_user_id,
+                creator=default_user_id,
+                rating=p.get("average_rating", 0.0),
             )
             db.session.add(prompt)
     db.session.commit()
@@ -79,7 +72,7 @@ def seed_prompts(default_user_id):
 def main():
     app = create_app()
     with app.app_context():
-        # Create tables for the current models (if they don't exist)
+        # Create tables for the current models
         db.create_all()
 
         # Ensure a default user exists to assign as the prompt creator

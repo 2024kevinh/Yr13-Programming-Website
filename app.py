@@ -10,8 +10,10 @@ def create_app():
     Returns the configured Flask app.
     """
     app = Flask(__name__)
-    # Use an explicit path for the DB so we know which file is used.
-    db_path = os.path.join(os.getcwd(), "project.db")
+    # if present; we do not automatically copy or move any other DB files.
+    os.makedirs(app.instance_path, exist_ok=True)
+    db_path = os.path.join(app.instance_path, "project.db")
+
     app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 

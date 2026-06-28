@@ -18,14 +18,15 @@ class User(db.Model):
 class Prompt(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.Text, nullable=False)
-    tags = db.Column(db.String(200))
+    creator = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    rating = db.Column(db.Float, default=0.0)
+    likes = db.Column(db.Integer, default=0)
+    # description = db.Column(db.Text, nullable=False)
+    # tags = db.Column(db.String(200))
     image_url = db.Column(db.String(300))
-    downloads = db.Column(db.Integer, default=0)
-    average_rating = db.Column(db.Float, default=0.0)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-
-    creator_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    # downloads = db.Column(db.Integer, default=0)
+    # created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
 
 
 class Rating(db.Model):
