@@ -1,5 +1,54 @@
 {% extends "base.html" %}
 {% block content %}
-<h2 class="page-title">Sign Up</h2>
-<p>Please sign up to create an account.</p>
+<div class="auth-container">
+    <h2 class="auth-title">Sign Up</h2>
+    
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-group">
+            {{ form.username.label }}
+            {{ form.username(class="form-input") }}
+            {% if form.username.errors %}
+                {% for error in form.username.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.email.label }}
+            {{ form.email(class="form-input") }}
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.password.label }}
+            {{ form.password(class="form-input") }}
+            {% if form.password.errors %}
+                {% for error in form.password.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.confirm_password.label }}
+            {{ form.confirm_password(class="form-input") }}
+            {% if form.confirm_password.errors %}
+                {% for error in form.confirm_password.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+        {{ form.submit(class="btn-submit") }}
+    </form>
+
+    <p class="auth-footer">Already have an account? <a href="{{ url_for('main.login') }}">Login</a></p>
+</div>
 {% endblock %}

@@ -22,12 +22,15 @@ body {
     position: sticky;
     top: 0;
     z-index: 1000;
+    position: relative;
 }
 
 .logo {
     font-size: 22px;
     font-weight: bold;
     color: #000000;
+    margin: 0;
+    line-height: normal;
 }
 
 .nav-right a {
@@ -90,9 +93,10 @@ body {
 
 /* Menu Button */
 .menu-btn {
-    position: fixed;
-    top: 10px;
+    position: absolute;
     left: 20px;
+    top: 47%;
+    transform: translateY(-50%);
     font-size: 22px;
     background: none;
     border: none;
@@ -108,7 +112,6 @@ body {
     width: 250px;
     height: 100%;
     background: #ffffff;
-    /* soft left shadow using pale green hue */
     box-shadow: 6px 0 26px rgba(200,230,210,0.12);
     padding: 30px 20px;
     transition: left 0.3s ease;
@@ -168,4 +171,155 @@ body {
         column-count: 1;
         padding: 15px 20px;
     }
+}
+
+/* Container for standalone Auth forms */
+.auth-container {
+    max-width: 400px;
+    margin: 60px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid rgba(180, 220, 190, 0.4);
+    box-shadow: 0 4px 12px rgba(180, 220, 190, 0.15);
+}
+
+.auth-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 24px;
+    color: #000000;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #000000;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 15px;
+    border: 1px solid rgba(180, 220, 190, 0.8);
+    border-radius: 6px;
+    outline: none;
+    background: #ffffff;
+    color: #000000;
+    transition: border-color 0.2s;
+}
+
+.form-input:focus {
+    border-color: #000000;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background: #e5f9e8; /* Matches navbar theme colour */
+    color: #000000;
+    border: 1px solid rgba(180, 220, 190, 0.8);
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.btn-submit:hover {
+    background: #ccefd2;
+}
+
+.btn-submit:active {
+    transform: scale(0.99);
+}
+
+.invalid-feedback {
+    color: #cc0000;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 14px;
+    color: #555555;
+}
+
+.auth-footer a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Navbar Dropdown Container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* The Username Button */
+.dropdown-btn {
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: #000000;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.dropdown-btn:hover {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: #000000;
+}
+
+/* Dropdown Menu Wrapper (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #ffffff;
+    min-width: 140px;
+    box-shadow: 0px 8px 24px rgba(180, 220, 190, 0.25);
+    border: 1px solid rgba(180, 220, 190, 0.5);
+    border-radius: 8px;
+    z-index: 1050;
+    margin-top: 6px;
+    overflow: hidden;
+}
+
+/* Individual Links inside the Dropdown */
+.dropdown-content a {
+    color: #000000;
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    margin-left: 0 !important; /* Overrides global nav-right spacing */
+    transition: background 0.2s;
+}
+
+/* Hover effect on dropdown links */
+.dropdown-content a:hover {
+    background-color: #e5f9e8;
+}
+
+/* Class toggled via JS to display menu */
+.dropdown-content.show {
+    display: block;
 }

@@ -8,15 +8,30 @@
 <body>
 
     <header class="navbar">
-        <h1 class="logo">PromptForge</h1>
+
+        <!-- Menu Button -->
+        <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+        
+        <h1 class="logo">
+            <a href="/" style="text-decoration: none; color: inherit;">PromptForge</a>
+        </h1>
         <div class="nav-right">
-            <a href="/login">Login</a>
-            <a href="/signup">Sign Up</a>
+            {% if current_user.is_authenticated %}
+                <div class="dropdown">
+                    <button class="dropdown-btn" onclick="toggleDropdown()">
+                        {{ current_user.username }} ▼
+                    </button>
+                    <div id="userDropdown" class="dropdown-content">
+                        <a href="/settings">Settings</a>
+                        <a href="{{ url_for('main.logout') }}" style="color: #cc0000; font-weight: bold;">Logout</a>
+                    </div>
+                </div>
+            {% else %}
+                <a href="/login">Login</a>
+                <a href="/signup">Sign Up</a>
+            {% endif %}
         </div>
     </header>
-
-    <!-- Menu Button -->
-    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
 
     <!-- Overlay -->
     <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
@@ -42,6 +57,25 @@ function toggleSidebar() {
     const overlay = document.getElementById("overlay");
     sidebar.classList.toggle("active");
     overlay.classList.toggle("active");
+}
+</script>
+
+<script>
+function toggleDropdown() {
+    document.getElementById("userDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks anywhere outside of it
+window.onclick = function(event) {
+    if (!event.target.matches('.dropdown-btn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
 }
 </script>
 
