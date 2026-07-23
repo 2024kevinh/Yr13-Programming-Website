@@ -4,6 +4,7 @@ from datetime import datetime
 
 db = SQLAlchemy()
 
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
@@ -26,7 +27,6 @@ class Prompt(db.Model):
     image_url = db.Column(db.String(300))
     # downloads = db.Column(db.Integer, default=0)
     # created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
 
 
 class Rating(db.Model):
@@ -40,8 +40,12 @@ class Rating(db.Model):
 class Like(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    prompt_id = db.Column(db.Integer, db.ForeignKey('prompt.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    prompt_id = db.Column(db.Integer, db.ForeignKey("prompt.id"), nullable=False)
+
+    __table_args__ = (
+        db.UniqueConstraint("user_id", "prompt_id"),
+    )
 
 
 class Generation(db.Model):
@@ -59,3 +63,14 @@ class Transaction(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     creator_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+
+class SavedPrompt(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    prompt_id = db.Column(db.Integer, db.ForeignKey("prompt.id"), nullable=False)
+
+    __table_args__ = (
+        db.UniqueConstraint("user_id", "prompt_id"),
+    )

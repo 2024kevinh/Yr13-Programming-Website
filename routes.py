@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 main = Blueprint("main", __name__)
 
+
 @main.route("/")
 def home():
     prompts = Prompt.query.order_by(Prompt.likes.desc()).all()
@@ -16,7 +17,7 @@ def home():
 def signup():
     if current_user.is_authenticated:
         return redirect(url_for("main.home"))
-    
+
     form = SignUpForm()
     if form.validate_on_submit():
         # Scrypt hashes the password securely before saving to project.db
@@ -29,7 +30,7 @@ def signup():
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for("main.login"))
-        
+
     return render_template("signup.html", form=form)
 
 
@@ -37,7 +38,7 @@ def signup():
 def login():
     if current_user.is_authenticated:
         return redirect(url_for("main.home"))
-        
+
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -48,7 +49,7 @@ def login():
         else:
             # Simple error fallback, can style a flash container later
             form.email.errors.append("Invalid email or password.")
-            
+
     return render_template("login.html", form=form)
 
 
@@ -63,13 +64,16 @@ def logout():
 def trending(): return render_template("trending.html")
 
 
-@main.route("/foryou")
-def for_you(): return render_template("foryou.html")
+@main.route("/savedprompts")
+@login_required
+def saved_prompts():
+    return render_template("savedprompts.html")
 
 
 @main.route("/myprompts")
-def my_prompts(): return render_template("myprompts.html")
-
+@login_required
+def my_prompts():
+    return render_template("myprompts.html")
 
 @main.route("/subscriptions")
 def subscriptions(): return render_template("subscriptions.html")
@@ -77,4 +81,3 @@ def subscriptions(): return render_template("subscriptions.html")
 
 @main.route("/settings")
 def settings(): return render_template("settings.html")
-

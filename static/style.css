@@ -88,7 +88,7 @@ body {
     display: flex;
     justify-content: space-between;
     font-size: 14px;
-    color: #000000;
+    margin-top: 12px;
 }
 
 /* Menu Button */
@@ -322,4 +322,18 @@ body {
 /* Class toggled via JS to display menu */
 .dropdown-content.show {
     display: block;
+}
+
+.like-btn,
+.save-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    transition: transform 0.15s ease;
+}
+
+.like-btn:hover,
+.save-btn:hover {
+    transform: scale(1.07);
 }

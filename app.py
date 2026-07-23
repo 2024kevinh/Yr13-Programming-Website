@@ -5,12 +5,13 @@ import os
 
 login_manager = LoginManager()
 
+
 def create_app():
     app = Flask(__name__)
-    
+
     # Required to sign WTForms securely
     app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "a-very-secure-local-key")
-    
+
     os.makedirs(app.instance_path, exist_ok=True)
     db_path = os.path.join(app.instance_path, "project.db")
     app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
@@ -35,6 +36,7 @@ def create_app():
         db.create_all()
 
     return app
+
 
 if __name__ == "__main__":
     create_app().run(debug=True)
