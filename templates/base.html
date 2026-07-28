@@ -79,5 +79,33 @@ window.onclick = function(event) {
 }
 </script>
 
+<script>
+document.querySelectorAll(".save-btn").forEach(button => {
+
+    button.addEventListener("click", function () {
+
+        const promptId = this.dataset.promptId;
+
+        fetch(`/save_prompt/${promptId}`, {
+            method: "POST"
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            if (data.saved) {
+                this.textContent = "★";
+                this.classList.add("saved");
+            } else {
+                this.textContent = "☆";
+                this.classList.remove("saved");
+            }
+
+        });
+
+    });
+
+});
+</script>
+
 </body>
 </html>

@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request
-from models import db, Prompt, User
+from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
+from models import db, Prompt, User, SavedPrompt
 from forms import LoginForm, SignUpForm
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -81,3 +81,27 @@ def subscriptions(): return render_template("subscriptions.html")
 
 @main.route("/settings")
 def settings(): return render_template("settings.html")
+
+
+@main.route("/save_prompt/<int:prompt_id>", methods=["POST"])
+@login_required
+def save_prompt(prompt_id):
+    saved = SavedPrompt.query.filter_by(
+        user_id=current_user.id,
+        prompt_id=prompt_id
+    ).first()
+
+    if saved:
+        db.session.delete(saved)
+        db.session.commit()
+        return jsonify({"saved": False})
+
+    new_save = SavedPrompt(
+        user_id=current_user.id,
+        prompt_id=prompt_id
+    )
+
+    db.session.add(new_save)
+    db.session.commit()
+
+    return jsonify({"saved": True})

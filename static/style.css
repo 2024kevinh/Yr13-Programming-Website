@@ -324,8 +324,20 @@ body {
     display: block;
 }
 
-.like-btn,
 .save-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 28px;
+    color: #888;          /* Unsaved = grey */
+    transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.save-btn.saved {
+    color: #FFD700;       /* Gold */
+}
+
+.like-btn {
     background: none;
     border: none;
     cursor: pointer;
@@ -335,5 +347,5 @@ body {
 
 .like-btn:hover,
 .save-btn:hover {
-    transform: scale(1.07);
+    transform: scale(1.15);
 }
