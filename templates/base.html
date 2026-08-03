@@ -9,21 +9,27 @@
 
     <header class="navbar">
 
-        <!-- Menu Button -->
         <button class="menu-btn" onclick="toggleSidebar()">☰</button>
-        
+
         <h1 class="logo">
-            <a href="/" style="text-decoration: none; color: inherit;">PromptForge</a>
+            <a href="/" style="text-decoration:none; color:inherit;">
+                PromptForge
+            </a>
         </h1>
+
         <div class="nav-right">
             {% if current_user.is_authenticated %}
                 <div class="dropdown">
                     <button class="dropdown-btn" onclick="toggleDropdown()">
                         {{ current_user.username }} ▼
                     </button>
+
                     <div id="userDropdown" class="dropdown-content">
                         <a href="/settings">Settings</a>
-                        <a href="{{ url_for('main.logout') }}" style="color: #cc0000; font-weight: bold;">Logout</a>
+                        <a href="{{ url_for('main.logout') }}"
+                           style="color:#cc0000;font-weight:bold;">
+                            Logout
+                        </a>
                     </div>
                 </div>
             {% else %}
@@ -33,10 +39,8 @@
         </div>
     </header>
 
-    <!-- Overlay -->
     <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
 
-    <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
         <h2>Menu</h2>
         <a href="/">Home</a>
@@ -51,61 +55,7 @@
         {% block content %}{% endblock %}
     </div>
 
-<script>
-function toggleSidebar() {
-    const sidebar = document.getElementById("sidebar");
-    const overlay = document.getElementById("overlay");
-    sidebar.classList.toggle("active");
-    overlay.classList.toggle("active");
-}
-</script>
-
-<script>
-function toggleDropdown() {
-    document.getElementById("userDropdown").classList.toggle("show");
-}
-
-// Close the dropdown if the user clicks anywhere outside of it
-window.onclick = function(event) {
-    if (!event.target.matches('.dropdown-btn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        for (var i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
-        }
-    }
-}
-</script>
-
-<script>
-document.querySelectorAll(".save-btn").forEach(button => {
-
-    button.addEventListener("click", function () {
-
-        const promptId = this.dataset.promptId;
-
-        fetch(`/save_prompt/${promptId}`, {
-            method: "POST"
-        })
-        .then(response => response.json())
-        .then(data => {
-
-            if (data.saved) {
-                this.textContent = "★";
-                this.classList.add("saved");
-            } else {
-                this.textContent = "☆";
-                this.classList.remove("saved");
-            }
-
-        });
-
-    });
-
-});
-</script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
 </body>
 </html>

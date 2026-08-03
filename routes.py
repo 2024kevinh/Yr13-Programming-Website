@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
-from models import db, Prompt, User, SavedPrompt
+from models import db, Prompt, User, SavedPrompt, Like
 from forms import LoginForm, SignUpForm
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -10,7 +10,32 @@ main = Blueprint("main", __name__)
 @main.route("/")
 def home():
     prompts = Prompt.query.order_by(Prompt.likes.desc()).all()
-    return render_template("index.html", prompts=prompts)
+
+    saved_ids = set()
+    liked_ids = set()
+
+    if current_user.is_authenticated:
+
+        saved_ids = {
+            save.prompt_id
+            for save in SavedPrompt.query.filter_by(
+                user_id=current_user.id
+            ).all()
+        }
+
+        liked_ids = {
+            like.prompt_id
+            for like in Like.query.filter_by(
+                user_id=current_user.id
+            ).all()
+        }
+
+    return render_template(
+        "index.html",
+        prompts=prompts,
+        saved_ids=saved_ids,
+        liked_ids=liked_ids
+    )
 
 
 @main.route("/signup", methods=["GET", "POST"])
@@ -105,3 +130,51 @@ def save_prompt(prompt_id):
     db.session.commit()
 
     return jsonify({"saved": True})
+
+@main.route("/like_prompt/<int:prompt_id>", methods=["POST"])
+@login_required
+def like_prompt(prompt_id):
+
+    liked = Like.query.filter_by(
+        user_id=current_user.id,
+        prompt_id=prompt_id
+    ).first()
+
+    prompt = Prompt.query.get_or_404(prompt_id)
+
+    if liked:
+        db.session.delete(liked)
+        prompt.likes -= 1
+        db.session.commit()
+
+        return jsonify({
+            "liked": False,
+            "likes": prompt.likes
+        })
+
+    new_like = Like(
+        user_id=current_user.id,
+        prompt_id=prompt_id
+    )
+
+    db.session.add(new_like)
+    prompt.likes += 1
+    db.session.commit()
+
+    return jsonify({
+        "liked": True,
+        "likes": prompt.likes
+    })
+
+
+@main.route("/prompt/<int:prompt_id>",
+            methods=["GET","POST"])
+def prompt_detail(prompt_id):
+    prompt = Prompt.query.get_or_404(prompt_id)
+    if request.method == "POST":
+        # Handle image upload logic here
+        pass
+    return render_template(
+        "prompt_detail.html",
+        prompt=prompt
+    )

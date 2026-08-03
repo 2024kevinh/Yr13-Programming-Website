@@ -15,26 +15,20 @@ class User(db.Model, UserMixin):
     balance = db.Column(db.Float, default=0.0)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+    prompts = db.relationship("Prompt", back_populates="user")
+
 
 class Prompt(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    creator = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    rating = db.Column(db.Float, default=0.0)
+
+    creator = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+
     likes = db.Column(db.Integer, default=0)
-    # description = db.Column(db.Text, nullable=False)
-    # tags = db.Column(db.String(200))
     image_url = db.Column(db.String(300))
-    # downloads = db.Column(db.Integer, default=0)
-    # created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    uploaded_image = db.Column(db.String(255), nullable=True)
 
-
-class Rating(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    rating_value = db.Column(db.Integer, nullable=False)
-
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    prompt_id = db.Column(db.Integer, db.ForeignKey('prompt.id'))
+    user = db.relationship("User", back_populates="prompts")
 
 
 class Like(db.Model):

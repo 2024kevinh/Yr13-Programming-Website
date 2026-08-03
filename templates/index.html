@@ -3,24 +3,59 @@
 {% block content %}
 
 <section class="feed">
-    {% for prompt in prompts %}
-    <div class="card">
-        <img src="{{ prompt.image_url }}" alt="Generated Image">
-        <div class="card-content">
-            <h3>{{ prompt.title }}</h3>
-            <p class="creator">@{{ prompt.creator }}</p>
-            <div class="stats">
-                <button class="save-btn" data-prompt-id="{{ prompt.id }}">
-                    ☆ {{ prompt.saves }}
-                </button>
 
-                <button class="like-btn" data-prompt-id="{{ prompt.id }}">
-                    ❤️ <span>{{ prompt.likes }}</span>
-                </button>
-            </div>      
+    {% for prompt in prompts %}
+
+    <a href="{{ url_for('main.prompt_detail', prompt_id=prompt.id) }}"
+       class="prompt-link">
+
+        <div class="card">
+
+            <img src="{{ url_for('static', filename=prompt.image_url) }}"
+                 alt="Generated Image">
+
+            <div class="card-content">
+
+                <h3>{{ prompt.title }}</h3>
+
+                <p class="creator">@{{ prompt.user.username }}</p>
+
+                <div class="stats">
+
+                    <button class="save-btn {% if prompt.id in saved_ids %}saved{% endif %}"
+                            data-prompt-id="{{ prompt.id }}">
+                        {% if prompt.id in saved_ids %}
+                            ★
+                        {% else %}
+                            ☆
+                        {% endif %}
+                    </button>
+
+                    <button class="like-btn {% if prompt.id in liked_ids %}liked{% endif %}"
+                            data-prompt-id="{{ prompt.id }}">
+
+                        <span class="heart">
+                            {% if prompt.id in liked_ids %}
+                                ❤
+                            {% else %}
+                                ♡
+                            {% endif %}
+                        </span>
+
+                        <span class="like-count">{{ prompt.likes }}</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
         </div>
-    </div>
+
+    </a>
+
     {% endfor %}
+
 </section>
 
 {% endblock %}

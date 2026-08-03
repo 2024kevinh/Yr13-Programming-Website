@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ prompt.title }}</h1>
+<img src="{{ url_for('static', filename=prompt.image_url) }}">
+<p>{{ prompt.description }}</p>
+<form method="POST"
+      enctype="multipart/form-data">
+
+    <input
+        type="file"
+        name="image">
+
+    <button type="submit">
+        Upload Image
+    </button>
+
+</form>
+{% if prompt.uploaded_image %}
+
+<h2>Your Uploaded Image</h2>
+
+<img src="{{ url_for('static',
+filename=prompt.uploaded_image) }}">
+
+{% endif %}
+{% endblock %}

@@ -337,15 +337,46 @@ body {
     color: #FFD700;       /* Gold */
 }
 
+.save-btn:hover {
+    transform: scale(1.15);
+}
+
 .like-btn {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 22px;
     transition: transform 0.15s ease;
 }
 
-.like-btn:hover,
-.save-btn:hover {
+.like-btn.liked {
+    color: #ff3b5c;
+    animation: heartPop .25s ease;
+    transform: scale(0.8);
+}
+
+.like-btn:hover {
     transform: scale(1.15);
+}
+
+@keyframes heartPop {
+
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.35);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}
+
+.prompt-link{
+    text-decoration:none;
+    color:inherit;
+    display:block;
 }
