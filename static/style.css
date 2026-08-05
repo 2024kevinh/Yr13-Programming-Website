@@ -380,3 +380,73 @@ body {
     color:inherit;
     display:block;
 }
+
+.prompt-page{
+    max-width:1000px;
+    margin:40px auto;
+    padding:25px;
+
+}
+
+.prompt-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+
+}
+
+.prompt-preview{
+    width:100%;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+    display: block;
+}
+
+.image-card{
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.description-card,
+.upload-card,
+.result-card{
+    background:white;
+    border-radius:18px;
+    padding:20px;
+    margin-top:25px;
+    box-shadow:0 8px 18px rgba(0,0,0,.08);
+}
+
+.back-link{
+    text-decoration:none;
+    color:#666;
+}
+
+.back-link:hover{
+    color:black;
+}
+
+.toast{
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%) translateY(30px);
+    background: rgba(30,30,30,.8);
+    color: white;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 15px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all .4s ease;
+    z-index: 9999;
+}
+
+.toast.show{
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}

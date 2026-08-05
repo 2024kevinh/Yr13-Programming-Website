@@ -7,38 +7,44 @@ def seed_prompts(default_user_id):
         {
             "title": "Cat",
             "description": "A detailed prompt to generate realistic animal imagery.",
+            "prompt_text": "Placeholder prompt",
             "image_url": "images/Cat.jpg",
-            "like": 4,
+            "likes": 4,
         },
         {
             "title": "Photography",
             "description": "Stylised portrait scene with neon lights.",
+            "prompt_text": "Placeholder prompt",
             "image_url": "images/Women.jpg",
-            "like": 5,
+            "likes": 5,
         },
         {
             "title": "Strawberry",
             "description": "Close up of a fruit with water droplets.",
+            "prompt_text": "Placeholder prompt",
             "image_url": "images/Strawberry.jpg",
-            "like": 4,
+            "likes": 4,
         },
         {
             "title": "Cyberpunk Cityscape",
             "description": "Cyberpunk city at night with neon signs.",
+            "prompt_text": "Placeholder prompt",
             "image_url": "images/CyberpunkCityScape.jpg",
-            "like": 3,
+            "likes": 3,
         },
         {
             "title": "Parrot",
             "description": "High-quality photorealistic animal prompt.",
+            "prompt_text": "Placeholder prompt",
             "image_url": "images/Parrot.jpg",
-            "like": 5,
+            "likes": 5,
         },
         {
             "title": "Cyberpunk",
             "description": "Street scene with neon lights.",
+            "prompt_text": "Placeholder prompt",
             "image_url": "images/Cyberpunk.jpeg",
-            "like": 3,
+            "likes": 3,
         },
     ]
 
@@ -49,8 +55,11 @@ def seed_prompts(default_user_id):
         if not exists:
             prompt = Prompt(
                 title=p["title"],
+                description=p["description"],
+                prompt_text=p["prompt_text"],
                 image_url=p["image_url"],
                 creator=default_user_id,
+                likes=p["likes"],
             )
             db.session.add(prompt)
     db.session.commit()
@@ -67,7 +76,9 @@ def main():
         default_email = "seed@example.com"
         user = User.query.filter_by(username=default_username).first()
         if not user:
-            user = User(username=default_username, email=default_email, password_hash="seed")
+            user = User(username=default_username,
+                        email=default_email,
+                        password_hash="seed")
             db.session.add(user)
             db.session.commit()
 

@@ -1,26 +1,98 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>{{ prompt.title }}</h1>
-<img src="{{ url_for('static', filename=prompt.image_url) }}">
-<p>{{ prompt.description }}</p>
-<form method="POST"
-      enctype="multipart/form-data">
 
-    <input
-        type="file"
-        name="image">
+<div class="prompt-page">
 
-    <button type="submit">
-        Upload Image
-    </button>
+    <a href="{{ url_for('main.home') }}" class="back-link">
+        ← Back
+    </a>
 
-</form>
-{% if prompt.uploaded_image %}
+    <div class="prompt-header">
 
-<h2>Your Uploaded Image</h2>
+        <div>
 
-<img src="{{ url_for('static',
-filename=prompt.uploaded_image) }}">
+            <h1>{{ prompt.title }}</h1>
 
-{% endif %}
+            <p class="creator">
+                by @{{ prompt.user.username }}
+            </p>
+
+        </div>
+
+        <div class="prompt-actions">
+
+            <button class="like-btn">
+
+                <span class="heart">❤</span>
+
+                <span class="like-count">
+
+                    {{ prompt.likes }}
+
+                </span>
+
+            </button>
+
+            <button class="save-btn">
+
+                ☆
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="image-card">
+
+        <img
+            class="prompt-preview"
+            src="{{ url_for('static', filename=prompt.image_url) }}">
+
+    </div>
+
+    <div class="description-card">
+
+        <h3>About this Prompt</h3>
+
+        <p>{{ prompt.description }}</p>
+
+    </div>
+
+    <div class="upload-card">
+
+        <h3>Try this Prompt</h3>
+
+        <form method="POST"
+              enctype="multipart/form-data">
+
+            <input type="file"
+                   name="image">
+
+            <button type="submit">
+
+                Generate
+
+            </button>
+
+        </form>
+
+    </div>
+
+    {% if prompt.uploaded_image %}
+
+    <div class="result-card">
+
+        <h2>Your Result</h2>
+
+        <img
+        src="{{ url_for('static',
+        filename=prompt.uploaded_image) }}">
+
+    </div>
+
+    {% endif %}
+
+</div>
+
 {% endblock %}

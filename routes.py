@@ -109,8 +109,13 @@ def settings(): return render_template("settings.html")
 
 
 @main.route("/save_prompt/<int:prompt_id>", methods=["POST"])
-@login_required
 def save_prompt(prompt_id):
+
+    if not current_user.is_authenticated:
+        return jsonify({
+            "error": "Please login to save prompts."
+        }), 401
+
     saved = SavedPrompt.query.filter_by(
         user_id=current_user.id,
         prompt_id=prompt_id
@@ -131,9 +136,14 @@ def save_prompt(prompt_id):
 
     return jsonify({"saved": True})
 
+
 @main.route("/like_prompt/<int:prompt_id>", methods=["POST"])
-@login_required
 def like_prompt(prompt_id):
+
+    if not current_user.is_authenticated:
+        return jsonify({
+            "error": "Please login to like prompts."
+        }), 401
 
     liked = Like.query.filter_by(
         user_id=current_user.id,
