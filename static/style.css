@@ -567,3 +567,32 @@ body {
     color: #666;
     font-size: 17px;
 }
+
+.saved-page{
+    padding:40px 60px;
+}
+
+.saved-page h1{
+    margin-bottom:30px;
+}
+
+.empty-message{
+    text-align:center;
+    margin-top:100px;
+}
+
+.empty-message h2{
+    margin-bottom:15px;
+}
+
+.empty-message p{
+    color:#666;
+    margin-bottom:25px;
+}
+
+.empty-message .btn-submit{
+    display:inline-block;
+    width:auto;
+    padding:12px 30px;
+    text-decoration:none;
+}

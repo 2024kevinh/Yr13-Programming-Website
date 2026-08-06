@@ -118,9 +118,22 @@ def trending():
 
 
 @main.route("/savedprompts")
-@login_required
 def saved_prompts():
-    return render_template("savedprompts.html")
+    saved_prompts = []
+    if current_user.is_authenticated:
+        saved_records = SavedPrompt.query.filter_by(
+            user_id=current_user.id
+        ).all()
+
+        saved_prompts = [
+            Prompt.query.get(save.prompt_id)
+            for save in saved_records
+        ]
+
+    return render_template(
+        "savedprompts.html",
+        saved_prompts=saved_prompts
+    )
 
 
 @main.route("/myprompts")

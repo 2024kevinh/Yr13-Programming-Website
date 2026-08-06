@@ -1,5 +1,75 @@
 {% extends "base.html" %}
 {% block content %}
-<h2 class="page-title">Saved Prompts</h2>
-<p>Your saved prompts will be displayed here.</p>
+
+<div class="saved-page">
+
+    <h1>Saved Prompts</h1>
+
+    {% if not current_user.is_authenticated %}
+
+        <div class="empty-message">
+
+            <h2>Login to view saved prompts</h2>
+
+            <p>
+                Save your favourite AI prompts and find them here later.
+            </p>
+
+            <a href="/login" class="btn-submit">
+                Login
+            </a>
+
+        </div>
+
+
+    {% elif saved_prompts|length == 0 %}
+
+        <div class="empty-message">
+
+            <h2>No saved prompts yet</h2>
+
+            <p>
+                Click the ☆ button on prompts you want to save.
+            </p>
+
+        </div>
+
+
+    {% else %}
+
+        <section class="feed">
+
+            {% for prompt in saved_prompts %}
+
+            <a href="{{ url_for('main.prompt_detail', prompt_id=prompt.id) }}"
+               class="prompt-link">
+
+                <div class="card">
+
+                    <img src="{{ url_for('static', filename=prompt.image_url) }}">
+
+                    <div class="card-content">
+
+                        <h3>
+                            {{ prompt.title }}
+                        </h3>
+
+                        <p class="creator">
+                            @{{ prompt.user.username }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </a>
+
+            {% endfor %}
+
+        </section>
+
+    {% endif %}
+
+</div>
+
 {% endblock %}
