@@ -86,7 +86,35 @@ def logout():
 
 
 @main.route("/trending")
-def trending(): return render_template("trending.html")
+def trending():
+    prompts = Prompt.query.order_by(
+        Prompt.likes.desc()
+    ).all()
+
+    saved_prompts = set()
+    liked_prompts = set()
+
+    if current_user.is_authenticated:
+        saved_prompts = {
+            save.prompt_id
+            for save in SavedPrompt.query.filter_by(
+                user_id=current_user.id
+            ).all()
+        }
+
+        liked_prompts = {
+            like.prompt_id
+            for like in Like.query.filter_by(
+                user_id=current_user.id
+            ).all()
+        }
+
+    return render_template(
+        "trending.html",
+        prompts=prompts,
+        saved_prompts=saved_prompts,
+        liked_prompts=liked_prompts
+    )
 
 
 @main.route("/savedprompts")
@@ -99,6 +127,7 @@ def saved_prompts():
 @login_required
 def my_prompts():
     return render_template("myprompts.html")
+
 
 @main.route("/subscriptions")
 def subscriptions(): return render_template("subscriptions.html")
@@ -177,14 +206,37 @@ def like_prompt(prompt_id):
     })
 
 
-@main.route("/prompt/<int:prompt_id>",
-            methods=["GET","POST"])
+@main.route("/prompt/<int:prompt_id>", methods=["GET", "POST"])
 def prompt_detail(prompt_id):
+
     prompt = Prompt.query.get_or_404(prompt_id)
+
+    saved_prompts = set()
+    liked_prompts = set()
+
+    if current_user.is_authenticated:
+
+        saved_prompts = {
+            save.prompt_id
+            for save in SavedPrompt.query.filter_by(
+                user_id=current_user.id
+            ).all()
+        }
+
+        liked_prompts = {
+            like.prompt_id
+            for like in Like.query.filter_by(
+                user_id=current_user.id
+            ).all()
+        }
+
     if request.method == "POST":
-        # Handle image upload logic here
+        # Image upload logic goes here
         pass
+
     return render_template(
         "prompt_detail.html",
-        prompt=prompt
+        prompt=prompt,
+        saved_prompts=saved_prompts,
+        liked_prompts=liked_prompts
     )

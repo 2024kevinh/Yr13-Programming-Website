@@ -1,5 +1,103 @@
 {% extends "base.html" %}
 {% block content %}
-<h2 class="page-title">Trending Prompts</h2>
-<p>This is where trending prompts will be.</p>
+
+<div class="page-title">
+
+    <h1>🔥 Trending Prompts</h1>
+
+    <p>
+        The most popular prompts from the community.
+    </p>
+
+</div>
+
+
+<section class="feed">
+
+{% for prompt in prompts %}
+
+<a href="{{ url_for('main.prompt_detail',
+                    prompt_id=prompt.id) }}"
+   class="prompt-link">
+
+
+<div class="card">
+
+    <img src="{{ url_for('static',
+          filename=prompt.image_url) }}">
+
+
+    <div class="card-content">
+
+        <h3>
+            {{ prompt.title }}
+        </h3>
+
+
+        <p class="creator">
+            @{{ prompt.user.username }}
+        </p>
+
+
+        <div class="stats">
+
+
+            <button class="save-btn
+            {% if prompt.id in saved_prompts %}
+                saved
+            {% endif %}"
+            data-prompt-id="{{ prompt.id }}">
+
+                {% if prompt.id in saved_prompts %}
+                    ★
+                {% else %}
+                    ☆
+                {% endif %}
+
+            </button>
+
+
+
+            <button class="like-btn
+            {% if prompt.id in liked_prompts %}
+                liked
+            {% endif %}"
+            data-prompt-id="{{ prompt.id }}">
+
+
+                <span class="heart">
+
+                {% if prompt.id in liked_prompts %}
+                    ❤
+                {% else %}
+                    ♡
+                {% endif %}
+
+                </span>
+
+
+                <span class="like-count">
+
+                    {{ prompt.likes }}
+
+                </span>
+
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</a>
+
+{% endfor %}
+
+</section>
+
+
 {% endblock %}

@@ -12,25 +12,25 @@ body {
 }
 
 /* Navbar */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 40px;
-    background: #e5f9e8;
-    box-shadow: 0 2px 18px rgba(180, 220, 190, 0.043);
+.navbar{
     position: sticky;
     top: 0;
     z-index: 1000;
-    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 55px;
+    background: #f5fff6;
+    border-bottom: 1px solid rgba(170,220,180,.35);
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.05);
+    backdrop-filter: blur(8px);
 }
 
-.logo {
-    font-size: 22px;
-    font-weight: bold;
-    color: #000000;
-    margin: 0;
-    line-height: normal;
+.logo{
+    font-size:28px;
+    font-weight:700;
+    letter-spacing:.6px;
 }
 
 .nav-right a {
@@ -38,6 +38,20 @@ body {
     text-decoration: none;
     color: #000000;
     font-weight: 500;
+}
+
+.nav-right{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-right a{
+    transition: .2s;
+}
+
+.nav-right a:hover{
+    color: #1f7a4c;
 }
 
 /* Masonry Grid */
@@ -48,25 +62,34 @@ body {
 }
 
 /* Cards */
-.card {
-    background: #ffffff;
-    border-radius: 16px;
+.card{
+    background:white;
+    border-radius: 18px;
     overflow: hidden;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     break-inside: avoid;
-    border: 1px solid rgba(200,230,210,0.6);
-    box-shadow: 0 6px 18px rgba(200,230,210,0.12);
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    border: 1px solid rgba(210,230,215,.8);
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.06);
+    transition:
+        transform .22s,
+        box-shadow .22s;
 }
 
-.card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 28px rgba(180,220,190,0.18);
+.card:hover{
+    transform: translateY(-8px);
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.12);
 }
 
-.card img {
+.card:hover img{
+    transform: scale(1.03);
+}
+
+.card img{
     width: 100%;
     display: block;
+    transition: .35s;
 }
 
 .card-content {
@@ -329,16 +352,16 @@ body {
     border: none;
     cursor: pointer;
     font-size: 28px;
-    color: #888;          /* Unsaved = grey */
+    color: #888;
     transition: transform 0.15s ease, color 0.15s ease;
 }
 
 .save-btn.saved {
-    color: #FFD700;       /* Gold */
+    color: #FFD700;
 }
 
 .save-btn:hover {
-    transform: scale(1.15);
+    transform:scale(1.12) rotate(-8deg);
 }
 
 .like-btn {
@@ -356,7 +379,7 @@ body {
 }
 
 .like-btn:hover {
-    transform: scale(1.15);
+    transform: scale(1.12);
 }
 
 @keyframes heartPop {
@@ -376,58 +399,70 @@ body {
 }
 
 .prompt-link{
-    text-decoration:none;
-    color:inherit;
-    display:block;
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
 
 .prompt-page{
-    max-width:1000px;
-    margin:40px auto;
-    padding:25px;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 25px;
 
 }
 
 .prompt-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 
 }
 
-.prompt-preview{
-    width:100%;
-    border-radius:18px;
-    box-shadow:0 10px 25px rgba(0,0,0,.15);
+.prompt-preview {
+    width: 100%;
     display: block;
+    max-height: 720px;
+    object-fit: contain;
 }
 
-.image-card{
-    background:white;
-    border-radius:20px;
-    overflow:hidden;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-
+.image-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .08);
 }
 
 .description-card,
 .upload-card,
-.result-card{
-    background:white;
-    border-radius:18px;
-    padding:20px;
-    margin-top:25px;
-    box-shadow:0 8px 18px rgba(0,0,0,.08);
+.result-card {
+    background: white;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, .06);
+}
+
+.upload-card input[type="file"] {
+    width: 100%;
+    margin: 15px 0 20px;
+}
+
+.upload-card .btn-submit {
+    width: 100%;
 }
 
 .back-link{
-    text-decoration:none;
-    color:#666;
+    text-decoration: none;
+    color: #666;
 }
 
 .back-link:hover{
-    color:black;
+    color: black;
+}
+
+.page-content{
+    max-width: 1500px;
+    margin: auto;
 }
 
 .toast{
@@ -435,10 +470,10 @@ body {
     top: 100px;
     left: 50%;
     transform: translateX(-50%) translateY(30px);
-    background: rgba(30,30,30,.8);
+    background: #202124;
     color: white;
     padding: 14px 24px;
-    border-radius: 12px;
+    border-radius: 999px;
     font-size: 15px;
     opacity: 0;
     pointer-events: none;
@@ -449,4 +484,86 @@ body {
 .toast.show{
     opacity: 1;
     transform: translateX(-50%) translateY(0);
+}
+
+.detail-layout {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 35px;
+    align-items: start;
+}
+
+.left-column,
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.right-column h1 {
+    font-size: 34px;
+    margin-bottom: 5px;
+}
+
+.prompt-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin: 8px 0 10px;
+}
+
+@media (max-width: 950px) {
+    .detail-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.hero {
+    text-align: center;
+    padding: 70px 20px 55px;
+}
+
+.hero h1 {
+    font-size: 46px;
+    margin-bottom: 18px;
+    letter-spacing: -1px;
+}
+
+.hero p {
+    max-width: 700px;
+    margin: 0 auto 35px;
+    color: #666;
+    line-height: 1.8;
+    font-size: 18px;
+}
+
+.hero-button {
+    display: inline-block;
+    padding: 14px 30px;
+    background: #e5f9e8;
+    color: black;
+    text-decoration: none;
+    border-radius: 999px;
+    font-weight: bold;
+    transition: .25s;
+}
+
+.hero-button:hover {
+    background: #cfead5;
+    transform: translateY(-3px);
+}
+
+.page-title {
+    text-align: center;
+    margin: 50px 0 30px;
+}
+
+.page-title h1 {
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+.page-title p {
+    color: #666;
+    font-size: 17px;
 }

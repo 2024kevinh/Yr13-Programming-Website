@@ -2,7 +2,24 @@
 
 {% block content %}
 
-<section class="feed">
+<section class="hero">
+
+    <h1>Discover Incredible AI Prompts</h1>
+
+    <p>
+        Explore high-quality prompts created by the community,
+        save your favourites, and generate amazing AI artwork.
+    </p>
+
+    <a href="#prompt-feed" class="hero-button">
+
+        Browse Prompts ↓
+
+    </a>
+
+</section>
+
+<section class="feed" id="prompt-feed">
 
     {% for prompt in prompts %}
 
