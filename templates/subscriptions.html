@@ -1,5 +1,168 @@
 {% extends "base.html" %}
+
 {% block content %}
-<h2 class="page-title">Subscriptions</h2>
-<p>Your subscribed creators and their latest prompts will be here.</p>
+
+<div class="subscription-page">
+
+    <div class="subscription-header">
+        <span class="subscription-label">PROMPTFORGE PLANS</span>
+
+        <h1>Choose the plan that suits you</h1>
+
+        <p>
+            Get more from PromptForge with additional generations
+            and enhanced features.
+        </p>
+    </div>
+
+
+    <div class="pricing-container">
+
+        <!-- FREE PLAN -->
+        <div class="pricing-card">
+
+            <div class="pricing-card-header">
+
+                <h2>Free</h2>
+
+                <p class="pricing-description">
+                    Everything you need to get started.
+                </p>
+
+                <div class="price">
+                    <span class="price-number">$0</span>
+                    <span class="price-period">/ month</span>
+                </div>
+
+            </div>
+
+
+            <div class="pricing-features">
+
+                <div class="feature">
+                    <span>✓</span>
+                    Browse prompts
+                </div>
+
+                <div class="feature">
+                    <span>✓</span>
+                    Like prompts
+                </div>
+
+                <div class="feature">
+                    <span>✓</span>
+                    Save prompts
+                </div>
+
+                <div class="feature">
+                    <span>✓</span>
+                    Create prompts
+                </div>
+
+                <div class="feature">
+                    <span>✓</span>
+                    Basic AI generations
+                </div>
+
+            </div>
+
+
+            {% if current_user.is_authenticated and current_user.subscription_type == "Free" %}
+
+                <button class="plan-button current-plan">
+                    Current Plan
+                </button>
+
+            {% else %}
+
+                <button class="plan-button">
+                    Choose Free
+                </button>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- PRO PLAN -->
+        <div class="pricing-card pro-card">
+
+            <div class="popular-badge">
+                MOST POPULAR
+            </div>
+
+
+            <div class="pricing-card-header">
+
+                <h2>Pro</h2>
+
+                <p class="pricing-description">
+                    More power for creators.
+                </p>
+
+                <div class="price">
+                    <span class="price-number">$9.99</span>
+                    <span class="price-period">/ month</span>
+                </div>
+
+            </div>
+
+
+            <div class="pricing-features">
+
+                <div class="feature">
+                    <span>✓</span>
+                    Everything in Free
+                </div>
+
+                <div class="feature">
+                    <span>✓</span>
+                    More AI generations
+                </div>
+
+                <div class="feature">
+                    <span>✓</span>
+                    Higher generation limits
+                </div>
+
+                <div class="feature">
+                    <span>✓</span>
+                    Priority generation
+                </div>
+
+                <div class="feature">
+                    <span>✓</span>
+                    Early access to new features
+                </div>
+
+            </div>
+
+
+            {% if current_user.is_authenticated and current_user.subscription_type == "Pro" %}
+
+                <button class="plan-button current-plan">
+                    Current Plan
+                </button>
+
+            {% else %}
+
+                <button class="plan-button pro-button"
+                        onclick="showToast('Subscription upgrades are not available yet.')">
+                    Upgrade to Pro
+                </button>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <p class="subscription-note">
+        Subscription payments are not currently available.
+        This page demonstrates the planned PromptForge subscription system.
+    </p>
+
+</div>
+
 {% endblock %}
