@@ -578,7 +578,7 @@ body {
 
 .empty-message{
     text-align:center;
-    margin-top:100px;
+    margin-top:120px;
 }
 
 .empty-message h2{
@@ -603,11 +603,6 @@ body {
 
 .my-page h1{
     margin-bottom:30px;
-}
-
-.empty-message{
-    text-align:center;
-    margin-top:120px;
 }
 
 .empty-icon{
@@ -977,4 +972,86 @@ body {
     .theme-select{
         flex-shrink:0;
     }
+}
+
+.my-page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.my-page-header h1{
+    font-size:34px;
+    margin-bottom:8px;
+}
+
+.my-page-header p{
+    color:#666;
+    font-size:15px;
+}
+
+@media(max-width:600px){
+    .my-page{
+        padding:30px 18px;
+    }
+
+    .my-page-header h1{
+        font-size:28px;
+    }
+}
+
+/* Create Prompt Page */
+.create-page{
+    max-width:850px;
+    margin:0 auto;
+    padding:50px 30px 80px;
+}
+
+.create-header{
+    margin-bottom:30px;
+}
+
+.create-header h1{
+    font-size:34px;
+    margin:18px 0 8px;
+}
+
+.create-header p{
+    color:#666;
+    font-size:15px;
+}
+
+.create-header .back-link{
+    display:inline-block;
+    margin-bottom:5px;
+}
+
+@media(max-width:600px){
+
+    .create-page{
+        padding:30px 18px 60px;
+    }
+
+    .create-header h1{
+        font-size:28px;
+    }
+
+}
+
+/* Create Prompt Form */
+.create-textarea{
+    resize: vertical;
+    min-height: 100px;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+}
+
+.prompt-input{
+    min-height: 180px;
+}
+
+.create-button{
+    width: 100%;
+    margin-top: 5px;
 }

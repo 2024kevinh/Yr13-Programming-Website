@@ -3,8 +3,21 @@
 
 <div class="my-page">
 
-    <h1>My Prompts</h1>
+    <div class="my-page-header">
 
+        <div>
+            <h1>My Prompts</h1>
+            <p>Create and manage your AI prompts.</p>
+        </div>
+
+        <a href="{{ url_for('main.create_prompt') }}"
+           class="hero-button">
+
+            ✨ Create Prompt
+
+        </a>
+
+    </div>
 
     {% if user_prompts|length == 0 %}
 
@@ -17,14 +30,30 @@
             <h2>You haven't created any prompts yet</h2>
 
             <p>
-                Your generated AI prompts will appear here once you create them.
+                Create your first prompt and it will appear here.
             </p>
+
+            <a href="{{ url_for('main.create_prompt') }}"
+               class="hero-button">
+
+                Create Your First Prompt
+
+            </a>
 
         </div>
 
-
     {% else %}
 
+        <div class="my-prompts-heading">
+
+            <h2>Your Prompts</h2>
+
+            <span>
+                {{ user_prompts|length }}
+                prompt{% if user_prompts|length != 1 %}s{% endif %}
+            </span>
+
+        </div>
 
         <section class="feed">
 
@@ -35,9 +64,9 @@
 
                 <div class="card">
 
-                    <img 
-                    src="{{ url_for('static', filename=prompt.image_url) }}"
-                    alt="{{ prompt.title }}">
+                    <img
+                        src="{{ url_for('static', filename=prompt.image_url) }}"
+                        alt="{{ prompt.title }}">
 
                     <div class="card-content">
 
@@ -45,11 +74,9 @@
                             {{ prompt.title }}
                         </h3>
 
-
                         <p class="creator">
                             Your Prompt
                         </p>
-
 
                     </div>
 
@@ -61,9 +88,7 @@
 
         </section>
 
-
     {% endif %}
-
 
 </div>
 

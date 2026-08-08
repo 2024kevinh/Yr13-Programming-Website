@@ -1,8 +1,11 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
+from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify, current_app
 from models import db, Prompt, User, SavedPrompt, Like
 from forms import LoginForm, SignUpForm
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
+import os
+import uuid
 
 main = Blueprint("main", __name__)
 
@@ -142,12 +145,82 @@ def my_prompts():
 
     user_prompts = Prompt.query.filter_by(
         creator=current_user.id
+    ).order_by(
+        Prompt.created_at.desc()
     ).all()
 
     return render_template(
         "myprompts.html",
         user_prompts=user_prompts
     )
+
+
+@main.route("/create", methods=["GET", "POST"])
+@login_required
+def create_prompt():
+
+    if request.method == "POST":
+
+        title = request.form.get("title", "").strip()
+        description = request.form.get("description", "").strip()
+        prompt_text = request.form.get("prompt_text", "").strip()
+        image = request.files.get("image")
+
+        if not title or not prompt_text:
+            flash("Please enter a title and prompt.", "error")
+            return redirect(url_for("main.create_prompt"))
+
+        if not image or image.filename == "":
+            flash("Please choose a preview image.", "error")
+            return redirect(url_for("main.create_prompt"))
+
+        allowed_extensions = {"png", "jpg", "jpeg", "webp"}
+
+        original_filename = secure_filename(image.filename)
+
+        if "." not in original_filename:
+            flash("Please upload a valid image file.", "error")
+            return redirect(url_for("main.create_prompt"))
+
+        extension = original_filename.rsplit(".", 1)[1].lower()
+
+        if extension not in allowed_extensions:
+            flash(
+                "Please upload a PNG, JPG, JPEG, or WEBP image.",
+                "error"
+            )
+            return redirect(url_for("main.create_prompt"))
+
+        filename = f"{uuid.uuid4().hex}.{extension}"
+
+        image_folder = os.path.join(
+            current_app.root_path,
+            "static",
+            "images"
+        )
+
+        os.makedirs(image_folder, exist_ok=True)
+
+        image.save(
+            os.path.join(image_folder, filename)
+        )
+
+        new_prompt = Prompt(
+            title=title,
+            description=description,
+            prompt_text=prompt_text,
+            creator=current_user.id,
+            image_url=f"images/{filename}"
+        )
+
+        db.session.add(new_prompt)
+        db.session.commit()
+
+        flash("Your prompt has been created!", "success")
+
+        return redirect(url_for("main.my_prompts"))
+
+    return render_template("create_prompts.html")
 
 
 @main.route("/subscriptions")

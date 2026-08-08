@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="create-page">
+
+    <div class="create-header">
+
+        <a href="{{ url_for('main.my_prompts') }}"
+           class="back-link">
+            ← Back to My Prompts
+        </a>
+
+        <h1>Create a Prompt</h1>
+
+        <p>
+            Share your AI prompt with the PromptForge community.
+        </p>
+
+    </div>
+
+
+    <section class="settings-card">
+
+        <div class="settings-card-header">
+
+            <div>
+                <h2>New Prompt</h2>
+                <p>Fill in the details below to create your prompt.</p>
+            </div>
+
+            <span class="settings-icon">✨</span>
+
+        </div>
+
+
+        <form method="POST"
+              enctype="multipart/form-data"
+              class="password-form">
+
+
+            <div class="form-group">
+
+                <label for="title">
+                    Title
+                </label>
+
+                <input
+                    id="title"
+                    type="text"
+                    name="title"
+                    class="form-input"
+                    maxlength="100"
+                    placeholder="Give your prompt a title"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="description">
+                    Description
+                </label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    class="form-input create-textarea"
+                    placeholder="Describe what your prompt is designed to create..."
+                    rows="4"></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="prompt_text">
+                    Prompt
+                </label>
+
+                <textarea
+                    id="prompt_text"
+                    name="prompt_text"
+                    class="form-input create-textarea prompt-input"
+                    placeholder="Enter your AI prompt..."
+                    rows="8"
+                    required></textarea>
+
+                <small class="password-hint">
+                    Your prompt text will only be visible to you.
+                </small>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="image">
+                    Preview Image
+                </label>
+
+                <input
+                    id="image"
+                    type="file"
+                    name="image"
+                    accept=".png,.jpg,.jpeg,.webp"
+                    class="form-input"
+                    required>
+
+                <small class="password-hint">
+                    Upload a PNG, JPG, JPEG, or WEBP image.
+                </small>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="settings-button create-button">
+
+                ✨ Create Prompt
+
+            </button>
+
+        </form>
+
+    </section>
+
+</div>
+
+{% endblock %}

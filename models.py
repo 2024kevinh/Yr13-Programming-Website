@@ -14,7 +14,6 @@ class User(db.Model, UserMixin):
     generations_today = db.Column(db.Integer, default=0)
     balance = db.Column(db.Float, default=0.0)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-
     prompts = db.relationship("Prompt", back_populates="user")
 
 
@@ -25,7 +24,7 @@ class Prompt(db.Model):
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text)
 
-    # Hidden prompt (not displayed publicly)
+    # Hidden prompt
     prompt_text = db.Column(db.Text)
 
     # Creator
@@ -54,7 +53,6 @@ class Like(db.Model):
 class Generation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     generated_at = db.Column(db.DateTime, default=datetime.utcnow)
-
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     prompt_id = db.Column(db.Integer, db.ForeignKey('prompt.id'))
 
@@ -64,16 +62,13 @@ class Transaction(db.Model):
     amount = db.Column(db.Float)
     reason = db.Column(db.String(100))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-
     creator_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
 class SavedPrompt(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     prompt_id = db.Column(db.Integer, db.ForeignKey("prompt.id"), nullable=False)
-
     __table_args__ = (
         db.UniqueConstraint("user_id", "prompt_id"),
     )
