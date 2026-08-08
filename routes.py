@@ -154,8 +154,35 @@ def my_prompts():
 def subscriptions(): return render_template("subscriptions.html")
 
 
-@main.route("/settings")
-def settings(): return render_template("settings.html")
+@main.route("/settings", methods=["GET", "POST"])
+@login_required
+def settings():
+    message = None
+    if request.method == "POST":
+        current_password = request.form.get("current_password")
+        new_password = request.form.get("new_password")
+        confirm_password = request.form.get("confirm_password")
+
+        if not check_password_hash(
+            current_user.password_hash,
+            current_password
+        ):
+            message = "Your current password is incorrect."
+        elif len(new_password) < 8:
+            message = "Your new password must be at least 8 characters."
+        elif new_password != confirm_password:
+            message = "The new passwords do not match."
+        else:
+            current_user.password_hash = generate_password_hash(
+                new_password,
+                method="scrypt"
+            )
+            db.session.commit()
+            message = "Your password has been changed successfully."
+    return render_template(
+        "settings.html",
+        message=message
+    )
 
 
 @main.route("/save_prompt/<int:prompt_id>", methods=["POST"])
