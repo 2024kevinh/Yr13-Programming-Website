@@ -139,7 +139,15 @@ def saved_prompts():
 @main.route("/myprompts")
 @login_required
 def my_prompts():
-    return render_template("myprompts.html")
+
+    user_prompts = Prompt.query.filter_by(
+        creator=current_user.id
+    ).all()
+
+    return render_template(
+        "myprompts.html",
+        user_prompts=user_prompts
+    )
 
 
 @main.route("/subscriptions")
